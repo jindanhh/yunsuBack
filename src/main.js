@@ -2,16 +2,52 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import '@/plugins/element.js'
+import 'normalize.css'
+import '@/assets/css/global.css'
+import viewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
+import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import TreeTable from 'vue-table-with-tree-grid'
+import '../src/assets/font/iconfont.css'
+import '../src/assets/css/global.css'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+axios.defaults.headers = {
+    'Content-Type': 'multipart/form-data'
+}
+import VueDOMPurifyHTML from 'vue-dompurify-html'
+Vue.use(VueDOMPurifyHTML)
+// 全局注册组件
+Vue.component('tree-table', TreeTable)
+axios.interceptors.response.use(
+    response => {
+        return response
+    },
+    error => {
+        return error
+    }
+)
+Vue.prototype.$axios = axios
+Vue.use(VueQuillEditor)
+Vue.use(viewer)
+Vue.use(ElementUI);
+Vue.component('tree-table', TreeTable)
 Vue.config.productionTip = false
 
-import axios from 'axios'
-Vue.prototype.$http = axios
-axios.defaults.baseURL = "http://192.168.1.3:8888/"
+Vue.filter('dateFormat', function(originVal) {
+    const dt = new Date(originVal)
+    const y = dt.getFullYear()
+    const m = (dt.getMonth() + 1 + '').padStart(2, '0')
+    const d = (dt.getDate() + '').padStart(2, '0')
 
-Vue.use(ElementUI);
+    return `${y}-${m}-${d}`
+})
+
 
 new Vue({
     router,

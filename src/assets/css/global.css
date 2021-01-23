@@ -1,0 +1,17 @@
+html,
+body,
+#app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    min-width: 1366px;
+}
+a {
+    text-decoration: none;
+}
+.fl {
+    float: left;
+}
+.el-card {
+    margin-top: 15px;
+}
