@@ -1,108 +1,55 @@
 import http from '@/api/http.js'
 
 //查询商品所有
-export const GoodsSelects = data => {
-    let param = new URLSearchParams()
-    param.append('goodsName', data.query)
-    param.append('current', data.current)
-    param.append('size', data.size)
+export const GoodsSelect = () => {
     return http({
-        method: 'post',
-        url: '/goods/GoodsCat',
-        data:param
+        method: 'get',
+        url: '/goods/select',
     })
 }
-
-export const goodsupdate= data =>{
-    let param = new URLSearchParams()
-    param.append('id', data.id)
-    param.append('goodsName', data.goodsName)
-    param.append('subTitle', data.subTitle)
-    param.append('goodsPrice', data.goodsPrice)
-    param.append('shopPrice', data.shopPrice)
-    param.append('brand', data.brand)
-    param.append('goodsNum', data.goodsNum)
-    param.append('hit', data.hit)
-    param.append('mainParams', data.mainParams)
-    param.append('content', data.content)
+//根据商品名称查询
+export const GoodsSelect = data => {
     return http({
-        method : 'post',
-        url : '/goods/update',
-        data : param
-
+        method: 'post',
+        url: '/goods/select',
+        params:{
+            title:data
+        }
     })
 }
 
 //修改商品
 export const GoodsUpdate = data => {
-    let param = new URLSearchParams()
-    param.append('id', data.id)
-    param.append('goodsName', data.goodsName)
-    param.append('subTitle', data.subTitle)
-    param.append('goodsPrice', data.goodsPrice)
-    param.append('shopPrice', data.shopPrice)
-    param.append('brand', data.brand)
-    param.append('goodsNum', data.goodsNum)
-    param.append('hit', data.hit)
-    param.append('mainParams', data.mainParams)
-    param.append('content', data.content)
     return http({
         method: 'post',
         url: '/goods/update',
-        data:param
+        params:{
+            goods: data
+        }
     })
 }
-// export const GoodsUpdate = data => {
-//     return http({
-//         method: 'post',
-//         url: '/goods/update',
-//         params:{
-//             goods: data
-//         }
-//     })
-// }
 
 //删除商品
 export const GoodsDetect = data => {
-    let param = new URLSearchParams()
-    param.append('id', data)
     return http({
         method: 'post',
-        url: '/goods/delect',
-        data:param
+        url: '/goods/detect',
+        params:{
+            id:data
+        }
     })
 }
 
 //添加商品
 export const GoodsInsert = data => {
-    let param = new URLSearchParams()
-    param.append('goodsName', data.goodsName)
-    param.append('subTitle', data.subTitle)
-    param.append('goodsPrice', data.goodsPrice)
-    param.append('shopPrice', data.shopPrice)
-    param.append('brand', data.brand)
-    param.append('goodsNum', data.goodsNum)
-    param.append('hit', data.hit)
-    param.append('mainParams', data.mainParams)
-    param.append('content', data.content)
     return http({
         method: 'post',
         url: '/goods/insert',
-        data:param
+        params:{
+            goods:data
+        }
     })
 }
-
-
-
-// export const GoodsInsert = data => {
-//     return http({
-//         method: 'post',
-//         url: '/goods/insert',
-//         params:{
-//             goods:data
-//         }
-//     })
-// }
 
 //查询所有商品分类
 export const CatSelectAll = () => {
@@ -114,13 +61,13 @@ export const CatSelectAll = () => {
 
 //添加商品一级分类
 export const GoodsCatOne= data => {
-    let param = new URLSearchParams()
-    param.append('Cat', data.Cat)
-    param.append('goodsCatName', data.goodsCatName)
     return http({
         method: 'post',
         url: '/Cat/CatInsert',
-        data:param
+        params:{
+            Cat: data.Cat,
+            goodsCatOne: data.goodsCatOne
+        }
     })
 }
 
@@ -150,15 +97,16 @@ export const GoodsCatThree = data => {
 
 //删除商品分类
 export const  GoodsCatDelect= data => {
-    let param = new URLSearchParams()
-    param.append('Cat', data.Cat)
-    param.append('id', data.id)
     return http({
         method: 'post',
         url: '/Cat/CatDelect',
-        data:param
+        params:{
+            Cat: data.Cat,
+            id : data.id
+        }
     })
 }
+
 
 
 

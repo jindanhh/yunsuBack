@@ -12,23 +12,23 @@
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" >
              <el-form-item label="分类" prop="region">
                 <el-cascader
-                    v-model="value"  :options="options" :props="{ expandTrigger: 'hover' }" @change="handleChange">
+                    v-model="value"  :options="options" :props="{ expandTrigger: 'hover'}" >
                 </el-cascader>
             </el-form-item>
 
-            <el-form-item label="标题" prop="name">
-                <el-input v-model="ruleForm.name"></el-input>
+            <el-form-item label="标题" prop="title">
+                <el-input v-model="ruleForm.title"></el-input>
             </el-form-item>
 
-           <el-form-item label="副标题" prop="fname">
-                <el-input v-model="ruleForm.fname"></el-input>
+           <el-form-item label="副标题" prop="subTitle">
+                <el-input v-model="ruleForm.subTitle"></el-input>
             </el-form-item>
             
-            <el-form-item label="简介" prop="desc">
-                <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+            <el-form-item label="简介" prop="summary">
+                <el-input type="textarea" v-model="ruleForm.summary"></el-input>
             </el-form-item>
 
-           <el-form-item label="标题图片" prop="titleimg">
+           <el-form-item label="标题图片" prop="img">
                 <el-upload
                     class="avatar-uploader"
                     action="https://jsonplaceholder.typicode.com/posts/"
@@ -46,18 +46,18 @@
                 <el-input v-model="ruleForm.num"></el-input>
             </el-form-item>
 
-           <el-form-item label="详情" prop="desc">
-                <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+           <el-form-item label="详情" prop="content">
+                <el-input type="textarea" v-model="ruleForm.content"></el-input>
             </el-form-item>
-              <el-form-item label="编辑" prop="compile">
-                <el-input v-model="ruleForm.compile"></el-input>
-            </el-form-item>
-
-              <el-form-item label="来源" prop="come">
-                <el-input v-model="ruleForm.come"></el-input>
+              <el-form-item label="编辑" prop="summary">
+                <el-input v-model="ruleForm.summary"></el-input>
             </el-form-item>
 
-              <el-form-item label="添加时间" prop="time">
+              <el-form-item label="来源" prop="source">
+                <el-input v-model="ruleForm.source"></el-input>
+            </el-form-item>
+
+              <el-form-item label="添加时间" prop="addtime">
                 <el-input v-model="ruleForm.time"></el-input>
             </el-form-item>
 
@@ -70,17 +70,23 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+import { NewsUpdate } from "@/api/News.js";
   export default {
     data() {
       return {
         imageUrl: '',  //上传图片
         value: [],  //分类
         ruleForm: {
-          name: '',
-          fname:'',
+          title: '',
+          subTitle:'',
+          summary:'',
+          img:'',
           type: [],
-          desc: '',
-          num:0
+          source: '',
+          num:0,
+          content:'',
+          addtime:''
         },
         rules: {
           name: [
@@ -112,17 +118,35 @@
         }]
       };
     },
+  created() {
+    // this.NewsListSelect();
+  },
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
+            this.NewsListSelect();
           } else {
             console.log('error submit!!');
             return false;
           }
         });
       },
+      async NewsListSelect() {
+         var admininfo={
+        title:this.ruleForm.title,
+        summary:this.ruleForm.summary,
+        img:this.ruleForm.img,
+        source:this.ruleForm.source,
+        num:this.ruleForm.num,
+        content:this.ruleForm.content,
+        addtime:this.ruleForm.addtime,
+        }
+        const a = await NewsUpdate(admininfo);
+        this.tableData=a.data;
+        console.log(a);
+     },
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },

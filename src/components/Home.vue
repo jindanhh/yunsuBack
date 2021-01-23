@@ -158,7 +158,6 @@ export default {
       this.isfold = !this.isfold
     },
     signout() {
-      window.localStorage.clear();
       this.$router.push('/login')
     }
   }
