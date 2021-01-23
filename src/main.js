@@ -13,12 +13,17 @@ import 'element-ui/lib/theme-chalk/index.css'
 import TreeTable from 'vue-table-with-tree-grid'
 import '../src/assets/font/iconfont.css'
 import '../src/assets/css/global.css'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 axios.defaults.headers = {
     'Content-Type': 'multipart/form-data'
 }
 import VueDOMPurifyHTML from 'vue-dompurify-html'
 Vue.use(VueDOMPurifyHTML)
-
+// 全局注册组件
+Vue.component('tree-table', TreeTable)
 axios.interceptors.response.use(
     response => {
         return response
@@ -28,7 +33,7 @@ axios.interceptors.response.use(
     }
 )
 Vue.prototype.$axios = axios
-
+Vue.use(VueQuillEditor)
 Vue.use(viewer)
 Vue.use(ElementUI);
 Vue.component('tree-table', TreeTable)

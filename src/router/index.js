@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import home from '../components/Home.vue'
-import shoplist from '../components/shop/shoplist.vue'
-import addproduct from '../components/shop/addproduct.vue'
-import commodity from '../components/shop/commodity.vue'
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -14,9 +10,16 @@ const routes = [
         path: '/home',
         component: home,
         children: [
-            { path: '/productlist', component: shoplist },
-            { path: '/addproduct', component: addproduct },
-            { path: '/classification', component: commodity },
+            { path: '/productlist', 
+            component: () =>
+            import ('@/components/shop/shoplist.vue') 
+            },
+            { path: '/addproduct', component: () =>
+            import ('@/components/shop/addproduct.vue') },
+            { path: '/classification', component: () =>
+            import ('@/components/shop/commodity.vue') },
+            { path: '/edit', component: () =>
+            import ('@/components/shop/edit.vue') },
             {
                 path: '/daiPay',
                 component: () =>
@@ -70,19 +73,19 @@ const router = new VueRouter({
 })
 
 // 前置守卫判断用户是否登录
-// router.beforeEach((to, from, next) => {
-//     let token = window.localStorage.getItem("token")
-//     if (to.path == '/login') {
-//         next()
-//     } else {
-//         if (token) {
-//             next()
-//         } else {
-//             next('/login')
-//             next()
-//         }
-//     }
+router.beforeEach((to, from, next) => {
+    let token = window.localStorage.getItem("token")
+    if (to.path == '/login') {
+        next()
+    } else {
+        if (token) {
+            next()
+        } else {
+            next('/login')
+            next()
+        }
+    }
 
-// });
+});
 
 export default router
